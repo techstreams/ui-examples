@@ -16,6 +16,7 @@
       <a href="#" class="btn btn-primary" @click="changeDisplay('section1')">Section 1</a>
       <a href="#" class="btn btn-secondary" @click="changeDisplay('section2')">Section 2</a>
       <a href="#" class="btn btn-secondary" @click="changeDisplay('section3')">Section 3</a>
+      <a href="#" class="btn btn-secondary" @click="changeDisplay('section4')">Section 4</a>
     </div>
     <section v-if="visible === 'section1'">
       <h1>Section 1</h1>
@@ -25,6 +26,9 @@
     </section>
     <section  v-if="visible === 'section3'">
       <h1>Section 3</h1>
+    </section>
+    <section  v-if="visible === 'section4'">
+      <h1>Section 4</h1>
     </section>
   </div>
   <script>
