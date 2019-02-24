@@ -78,7 +78,8 @@
        <div v-if="activeroute == 'projects'" class="projects">
   <h1 class="subheading grey--text">My Projects</h1>
   <v-container class="my-5">
-    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae alias excepturi tempore. Quidem et vitae praesentium similique doloremque sint ipsum nesciunt voluptatum voluptas. Inventore dicta qui debitis corrupti nesciunt recusandae!</p>
+    <v-list three-line is="simple-project" v-for="(project, index) in projects" v-bind:projectdata="project" v-on:removeproject='removeProject(index)'>
+    </v-list>
   </v-container>
 </div>
 
@@ -94,10 +95,30 @@
       </v-content>
     </v-app>
   </div>
+  <script type="text/x-template" id="project-template">
+  <v-list-tile >
+    <v-list-tile-content>
+      <v-list-tile-title v-text="projectdata.name"></v-list-tile-title>
+    </v-list-tile-content>
+ 
+    <v-list-tile-action>
+      <v-btn flat fab class="remove" @click.prevent="$emit('removeproject', $event.target.index)">
+        <v-icon color="black">delete</v-icon>
+      </v-btn>
+    </v-list-tile-action>
+  </v-list-tile>
+</script>
+
+
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 
 <script>
+  Vue.component("simple-project", {
+    template: "#project-template",
+    props: ["projectdata"]
+  });
+  
   new Vue({ 
     el: '#app',
     data: {
@@ -109,12 +130,22 @@
           { icon: 'person', text: 'Team', route: 'team' },
         ]        
       },
-      activeroute: 'dashboard'
+      activeroute: 'dashboard',
+      projects: [
+        {name: 'Project 1'},
+        {name: 'Project 2'},
+        {name: 'Project 3'},
+        {name: 'Project 4'},
+        {name: 'Project 5'}
+      ]
     },
     methods: {
       changeRoute: function(route){
         this.activeroute = route; 
         this.nav.drawer = !this.nav.drawer;
+      },
+      removeProject: function(index) {
+        this.projects.splice(index, 1);
       }
     }
   })
