@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.7/dist/vue.js"></script>
+  <script src="https://unpkg.com/chart.js@2.7.2/dist/Chart.bundle.js"></script>
+<script src="https://unpkg.com/vue-chartkick@0.5.0"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Vue-ChartKick Examples</h1>
+  <a href="https://github.com/ankane/vue-chartkick">vue-chartkick</a>
+  <p>Line Chart</p>
+  <line-chart :data="chartData"></line-chart>
+  <p>Line Chart</p>
+  <line-chart :data="{'2017-05-13': 2, '2017-05-14': 5}"></line-chart>
+  <p>Pie Chart</p>
+  <pie-chart :data="[['Blueberry', 44], ['Strawberry', 23]]"></pie-chart>
+  <p>Geo Chart</p>
+  <geo-chart :data="[['United States', 44], ['Germany', 23], ['Brazil', 22]]"></geo-chart>
+  <p>Column Chart</p>
+  <column-chart :data="[['Sun', 32], ['Mon', 46], ['Tue', 28]]"></column-chart>
+  <p>Bar Chart</p>
+ <bar-chart :data="[['X-Small', 5], ['Small', 27]]"></bar-chart>
+  <p>Area Chart</p>
+  <area-chart :data="{'2017-01-01 00:00:00 -0800': 2, '2017-01-01 00:01:00 -0800': 5}"></area-chart>
+  <p>Scatter Chart</p>
+  <scatter-chart :data="[[174.0, 80.0], [176.5, 82.3]]" xtitle="Size" ytitle="Population"></scatter-chart>
+  <p>Timeline</p>
+  <timeline :data="[['Washington', '1789-04-29', '1797-03-03'], ['Adams', '1797-03-03', '1801-03-03']]"></timeline>
+  <p>Multiple Series</p>
+  <line-chart :data="linedata" />
+</div>
+
+<script>
+  var app = new Vue({
+    el: "#app",
+    data: {
+      chartData: [["Jan", 4], ["Feb", 2], ["Mar", 10], ["Apr", 5], ["May", 3]],
+      linedata: [
+         {name: 'Workout', data: {'2017-01-01 00:00:00 -0800': 3, '2017-01-02 00:00:00 -0800': 4}},
+         {name: 'Call parents', data: {'2017-01-01 00:00:00 -0800': 5, '2017-01-02 00:00:00 -0800': 3}}
+      ]
+    }
+  })
+</script>
+</body>
+</html>
