@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Section Test</title>
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD&#43;dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>Another Test</h1>
+    <div style="margin-top:30px;">
+      <a href="#" class="btn btn-primary" @click="changeDisplay('section1')">Section 1</a>
+      <a href="#" class="btn btn-secondary" @click="changeDisplay('section2')">Section 2</a>
+      <a href="#" class="btn btn-secondary" @click="changeDisplay('section3')">Section 3</a>
+      <a href="#" class="btn btn-secondary" @click="changeDisplay('section4')">Section 4</a>
+      <a href="#" class="btn btn-secondary" @click="changeDisplay('section5')">Section 5</a>
+    </div>
+    <section v-if="visible === 'section1'">
+      <h1>Section 1</h1>
+    </section>
+    <section v-if="visible === 'section2'">
+      <h1>Section 2</h1>
+    </section>
+    <section  v-if="visible === 'section3'">
+      <h1>Section 3</h1>
+    </section>
+    <section  v-if="visible === 'section4'">
+      <h1>Section 4</h1>
+    </section>
+    <section  v-if="visible === 'section5'">
+      <h1>Section 5</h1>
+    </section>
+  </div>
+  <script>
+    new Vue({
+      el:'#app',
+      data: {
+        visible: 'section1'
+      },
+      methods: {
+        changeDisplay: function(section){
+          this.visible = section;
+        }
+      }
+    })
+  </script>
+</body>
+</html>
+
+
