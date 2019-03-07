@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material&#43;Icons" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+
+<style>
+  [v-cloak] { display: none;}
+  
+  .project.complete {
+    border-left: 4px solid #3cd1c2;
+  }
+  .project.ongoing {
+    border-left: 4px solid orange;
+  }
+  .project.overdue {
+    border-left: 4px solid tomato;
+  }
+ .v-chip.complete {
+    background: #3cd1c2;
+  }
+ .v-chip.ongoing {
+    background: orange;
+  }
+ .v-chip.overdue {
+    background: tomato;
+  }
+</style>
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div v-cloak id="app">
+    <div class="navbar">
+      <nav>
+
+        <v-toolbar flat app>
+          <v-toolbar-side-icon class="grey--text" @click="nav.drawer = !nav.drawer"></v-toolbar-side-icon>
+          <v-toolbar-title class="text-uppercase grey--text" >
+            <span class="font-weight-light">My App</span>
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn flat fab left color="grey">
+            <v-icon>settings</v-icon>
+          </v-btn>
+        </v-toolbar>
+
+        <v-navigation-drawer v-model="nav.drawer" class="grey darken-3" app>
+          <v-list class="white--text">
+            <v-list-tile v-for="l in nav.links" :key="l.text" @click="changeRoute(l.route)">
+              <v-list-tile-action>
+                <v-icon class="white--text">{{l.icon}}</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>{{l.text}}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-navigation-drawer>
+
+      </nav>
+    </div>
+
+
+    <v-app grey lighten-4>
+      <v-content class="mx-5 mb-5 my-3">
+        <div v-if="activeroute == 'dashboard'" class="dashboard">
+          <h1 class="subheading grey--text">Dashboard</h1>
+          <v-container class="my-5">
+            <v-layout row wrap>
+              <v-flex xs12 md6>
+                <v-btn outline block class="primary">1</v-btn>
+              </v-flex>
+              <v-flex xs4 md2>
+                <v-btn outline block class="primary">2</v-btn>
+              </v-flex>
+              <v-flex xs4 md2>
+                <v-btn outline block class="primary">2</v-btn>
+              </v-flex>
+              <v-flex xs4 md2>
+                <v-btn outline block class="primary">2</v-btn>
+              </v-flex>
+            </v-layout>
+            <v-layout row wrap justify-space-around>
+              <v-flex xs4 md3>
+                <v-btn outline block class="success">1</v-btn>
+              </v-flex>
+              <v-flex xs4 md3>
+                <v-btn outline block class="success">2</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </div>
+
+
+        <div v-if="activeroute == 'projects'" class="projects">
+          <h1 class="subheading grey--text">Projects</h1>
+          <v-container class="my-5">
+            <!--     <v-list three-line is="simple-project" v-for="(project, index) in projects" v-bind:projectdata="project" v-on:removeproject='removeProject(index)'>
+</v-list> -->
+            <v-layout row class="mb-3">
+              <v-tooltip top>
+                <v-btn small flat color="grey" slot="activator" @click="sortBy('title')">
+                  <v-icon left small>folder</v-icon>
+                  <span class="caption text-lowercase">By project name</span>
+                </v-btn>   
+                <span>Sort projects by project name</span>
+              </v-tooltip>
+              <v-tooltip top>
+                <v-btn small flat color="grey" slot="activator" @click="sortBy('person')">
+                  <v-icon left small>person</v-icon>
+                  <span class="caption text-lowercase">By person</span>
+                </v-btn>  
+                <span>Sort projects by project owner</span>
+              </v-tooltip>
+            </v-layout>
+            <v-card v-for="project in projects" :key="project.title" flat>
+              <v-layout row wrap :class="`pa-3 project ${project.status}`">
+                <v-flex xs12 md6> 
+                  <div class="caption grey--text">
+                    Project title
+                  </div>
+                  <div>{{project.title}}</div>
+                </v-flex>
+                <v-flex xs6 sm4 md2>
+                  <div class="caption grey--text">
+                    Person
+                  </div>
+                  <div>{{project.person}}</div>          
+                </v-flex>
+                <v-flex xs6 sm4 md2>
+                  <div class="caption grey--text">
+                    Due by
+                  </div>
+                  <div>{{project.due}}</div>          
+                </v-flex>
+                <v-flex xs2 sm4 md2>
+                  <div class="right">
+                    <v-chip small :class="`${project.status} white--text caption my-2`">{{project.status}}</v-chip>
+                  </div>        
+                </v-flex>
+              </v-layout>
+              <v-divider></v-divider>
+            </v-card>
+          </v-container>
+        </div>
+
+
+        <div v-if="activeroute == 'team'" class="team">
+          <h1 class="subheading grey--text">Team</h1>
+          <v-container class="my-5">
+            <v-layout row wrap>
+              <v-flex xs12 sm6 md4 lg3 v-for="person in team" :key="person.name">
+                <v-card flat class="text-xs-center ma-3">
+                  <v-responsive class="pt-4">
+                    image goes here
+                  </v-responsive>
+                  <v-card-text>
+                    <div class="subheading">{{person.name}}</div>
+                    <div class="grey--text">{{person.role}}</div>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-btn flat color="grey">
+                      <v-icon left>message</v-icon>
+                      <span>message</span>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </div>
+
+
+      </v-content>
+    </v-app>
+  </div>
+  <script type="text/x-template" id="project-template">
+  <v-list-tile >
+    <v-list-tile-content>
+      <v-list-tile-title v-text="projectdata.name"></v-list-tile-title>
+    </v-list-tile-content>
+ 
+    <v-list-tile-action>
+      <v-btn flat fab class="remove" @click.prevent="$emit('removeproject', $event.target.index)">
+        <v-icon color="black">delete</v-icon>
+      </v-btn>
+    </v-list-tile-action>
+  </v-list-tile>
+</script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+
+<script>
+  Vue.component("simple-project", {
+    template: "#project-template",
+    props: ["projectdata"]
+  });
+  
+  new Vue({ 
+    el: '#app',
+    data: {
+      nav: {
+        drawer: false,
+        links: [
+          { icon: 'dashboard', text: 'Dashboard', route: 'dashboard' },
+          { icon: 'folder', text: 'My Projects', route: 'projects' },
+          { icon: 'person', text: 'Team', route: 'team' },
+        ]        
+      },
+      activeroute: 'dashboard',
+      projects: [
+         {title: 'Project 5', person: 'Marla', due: '26 July 2019', status: 'ongoing'},
+         {title: 'Project 1', person: 'John', due: '4 March 2019', status: 'complete'},
+        {title: 'Project 4', person: 'Karen', due: '6 August 201', status: 'ongoing'},
+        {title: 'Project 2', person: 'Jane', due: '6 August 2019', status: 'ongoing'},
+        {title: 'Project 3', person: 'Fred', due: '1 January 2019', status: 'overdue'}
+      ],
+      team: [
+        {name: 'Marla', role: 'Developer'},
+        {name: 'John', role: 'Sales'},
+        {name: 'Karen', role: 'Sales'},
+        {name: 'Jane', role: 'Manager'},
+        {name: 'Fred', role: 'Social Media'}
+      ]
+    },
+    methods: {
+      changeRoute: function(route){
+        this.activeroute = route; 
+        this.nav.drawer = !this.nav.drawer;
+      },
+      removeProject: function(index) {
+        this.projects.splice(index, 1);
+      },
+
+      sortBy: function(prop) {
+        return this.projects.sort(function(a,b){
+          return a[prop] < b[prop] ? -1 : 1;
+        });
+      }
+    }
+  })
+</script>
+
+
+</body>
+</html>
