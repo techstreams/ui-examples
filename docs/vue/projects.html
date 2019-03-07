@@ -10,11 +10,20 @@
   .project.complete {
     border-left: 4px solid #3cd1c2;
   }
-    .project.ongoing {
+  .project.ongoing {
     border-left: 4px solid orange;
   }
-    .project.overdue {
+  .project.overdue {
     border-left: 4px solid tomato;
+  }
+ .v-chip.complete {
+    background: #3cd1c2;
+  }
+ .v-chip.ongoing {
+    background: orange;
+  }
+ .v-chip.overdue {
+    background: tomato;
   }
 </style>
 
@@ -90,6 +99,22 @@
   <v-container class="my-5">
 <!--     <v-list three-line is="simple-project" v-for="(project, index) in projects" v-bind:projectdata="project" v-on:removeproject='removeProject(index)'>
     </v-list> -->
+    <v-layout row class="mb-3">
+      <v-tooltip top>
+        <v-btn small flat color="grey" slot="activator" @click="sortBy('title')">
+          <v-icon left small>folder</v-icon>
+          <span class="caption text-lowercase">By project name</span>
+        </v-btn>   
+        <span>Sort projects by project name</span>
+      </v-tooltip>
+      <v-tooltip top>
+        <v-btn small flat color="grey" slot="activator" @click="sortBy('person')">
+          <v-icon left small>person</v-icon>
+          <span class="caption text-lowercase">By person</span>
+        </v-btn>  
+        <span>Sort projects by project owner</span>
+      </v-tooltip>
+    </v-layout>
     <v-card v-for="project in projects" :key="project.title" flat>
       <v-layout row wrap :class="`pa-3 project ${project.status}`">
         <v-flex xs12 md6> 
@@ -111,10 +136,9 @@
           <div>{{project.due}}</div>          
         </v-flex>
         <v-flex xs2 sm4 md2>
-         <div class="caption grey--text">
-           Status
-         </div>
-          <div>{{project.status}}</div>          
+          <div class="right">
+            <v-chip small :class="`${project.status} white--text caption my-2`">{{project.status}}</v-chip>
+          </div>        
         </v-flex>
       </v-layout>
       <v-divider></v-divider>
@@ -171,11 +195,11 @@
       },
       activeroute: 'dashboard',
       projects: [
-         {title: 'Project 1', person: 'Fred', due: '26 July 2019', status: 'ongoing'},
-         {title: 'Project 2', person: 'John', due: '4 March 2019', status: 'complete'},
-        {title: 'Project 3', person: 'Jane', due: '6 August 201', status: 'ongoing'},
-        {title: 'Project 4', person: 'Karen', due: '6 August 2019', status: 'ongoing'},
-        {title: 'Project 5', person: 'Marla', due: '1 January 2019', status: 'overdue'}
+         {title: 'Project 5', person: 'Marla', due: '26 July 2019', status: 'ongoing'},
+         {title: 'Project 1', person: 'John', due: '4 March 2019', status: 'complete'},
+        {title: 'Project 4', person: 'Karen', due: '6 August 201', status: 'ongoing'},
+        {title: 'Project 2', person: 'Jane', due: '6 August 2019', status: 'ongoing'},
+        {title: 'Project 3', person: 'Fred', due: '1 January 2019', status: 'overdue'}
       ]
     },
     methods: {
@@ -185,6 +209,12 @@
       },
       removeProject: function(index) {
         this.projects.splice(index, 1);
+      },
+
+      sortBy: function(prop) {
+        return this.projects.sort(function(a,b){
+          return a[prop] < b[prop] ? -1 : 1;
+        });
       }
     }
   })
