@@ -1,0 +1,25 @@
+{
+  coursetopic: {
+    name: "RANDOM TOPICS :)"
+  },
+  coursework: [
+    {
+      'title': 'Lesson 1',
+      'description': 'TSFormBot',
+      'materials': [
+        {'link': { 'url': 'https://github.com/techstreams/TSFormBot/blob/master/README.md' }}
+      ],
+      'workType': 'ASSIGNMENT',
+      'state': 'DRAFT'
+    },
+    {
+      'title': 'Lesson 2',
+      'description': 'TSCron',
+      'materials': [
+        {'link': { 'url': 'https://github.com/techstreams/TSCron/blob/master/README.md' }}
+      ],
+      'workType': 'ASSIGNMENT',
+      'state': 'DRAFT'
+    }
+  ]
+}
