@@ -1,8 +1,8 @@
 {
-  coursetopic: {
-    name: "RANDOM TOPICS :)"
+  'coursetopic': {
+    'name': "RANDOM TOPICS :)"
   },
-  coursework: [
+  'coursework': [
     {
       'title': 'Lesson 1',
       'description': 'TSFormBot',
