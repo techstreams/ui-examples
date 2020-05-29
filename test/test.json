@@ -5,7 +5,7 @@
   "coursework": [
     {
       "title": "Lesson 1",
-      "description": "TSFormBot",
+      "description": "🥝 TSFormBot",
       "materials": [
         {"link": { "url": "https://github.com/techstreams/TSFormBot/blob/master/README.md" }}
       ],
@@ -14,7 +14,7 @@
     },
     {
       "title": "Lesson 2",
-      "description": "TSCron",
+      "description": "⏲️ TSCron",
       "materials": [
         {"link": { "url": "https://github.com/techstreams/TSCron/blob/master/README.md" }}
       ],
